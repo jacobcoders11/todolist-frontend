@@ -79,7 +79,7 @@ export default function Sidebar({ activeTab, userType = "user" }) {
                     isActive ? 'text-gray-900 bg-gray-100 font-bold' : ''
                   }`}
                 >
-                  <div className="flex justify-center flex-shrink-0 w-6">
+                  <div className="flex justify-center shrink-0 w-6">
                     <i className={`bi ${item.icon} text-base ${isActive ? 'font-black text-black drop-shadow-md' : ''}`}></i>
                   </div>
                   <span className="ml-3">{item.name}</span>
