@@ -1,94 +1,88 @@
 # todolist-frontend
 
-Basic Git Workflow
-1. Check Status
+## Git Basics Guide
+
+A simple guide to the most commonly used Git commands.
+
+## Basic Git Workflow
+
+### 1. Check Status
+```bash
 git status
-
-
+```
 Shows the current state of your working directory and staging area.
 
-2. Add Changes
+### 2. Add Changes
+```bash
 git add .
-
-
+```
 Stages all changes in the current directory for commit.
 
-Alternative:
-
+**Alternative:**
+```bash
 git add filename.txt
-
-
+```
 Stages a specific file.
 
-3. Commit Changes
+### 3. Commit Changes
+```bash
 git commit -m "Your commit message"
-
-
+```
 Commits staged changes with a descriptive message.
 
-4. Push Changes
+### 4. Push Changes
+```bash
 git push
-
-
+```
 Uploads your local commits to the remote repository.
 
-First time pushing a new branch:
-
+**First time pushing a new branch:**
+```bash
 git push -u origin branch-name
+```
 
-Working with Branches
-5. Switch Branches
+## Working with Branches
+
+### 5. Switch Branches
+```bash
 git checkout branch-name
-
-
+```
 Switches to an existing branch.
 
-Create and switch to a new branch:
-
+**Create and switch to new branch:**
+```bash
 git checkout -b new-branch-name
+```
 
-6. Fetch Updates
+### 6. Fetch Updates
+```bash
 git fetch
+```
+Downloads updates from remote repository without merging them.
 
-
-Downloads updates from the remote repository without merging them.
-
-7. Pull Updates
+### 7. Pull Updates
+```bash
 git pull
+```
+Downloads and merges updates from remote repository to your current branch.
 
+## Common Workflow Example
 
-Downloads and merges updates from the remote repository into your current branch.
+1. Make changes to your files
+2. `git add .` - Stage all changes
+3. `git commit -m "Description of changes"` - Commit changes
+4. `git push` - Push to remote repository
 
-⚙️ Common Workflow Example
+## Before Starting Work
 
-Make changes to your files
-
-Stage all changes:
-
-git add .
-
-
-Commit with a clear message:
-
-git commit -m "Description of changes"
-
-
-Push to remote:
-
-git push
-
-Before Starting Work
-
-Always pull the latest changes before making new edits:
-
+```bash
 git pull
+```
+Always pull the latest changes before starting new work.
 
-Tips
+## Tips
 
-Write clear and descriptive commit messages.
-
-Commit frequently with small, logical changes.
-
-Always pull before pushing to avoid conflicts.
-
-Use git status often to monitor your repository’s state.
+- Write clear, descriptive commit messages
+- Commit frequently with small, logical changes
+- Always pull before pushing to avoid conflicts
+- Use `git status` frequently to see what's happening
