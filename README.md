@@ -1,4 +1,26 @@
 # todolist-frontend
+This is the frontend of a simple MERN To-Do List Application, built using Next.js 14, React, and Tailwind CSS.
+It allows users to add, mark, and delete tasks, and connects to a backend API built with Express.js and MongoDB.
+
+# Project Description
+This project is a minimal to-do list web app designed to demonstrate a full-stack MERN workflow.
+The frontend (this repository) provides the user interface built with Next.js and styled with Tailwind CSS.
+It communicates with a REST API from the backend server to perform CRUD (Create, Read, Update, Delete) operations on tasks.
+
+# Tech Stack
+Next.js 14 (React framework)
+Tailwind CSS 4 for UI styling
+Axios for API requests
+React Icons for simple icons
+Node.js + Express.js + MongoDB on the backend (separate repository)
+
+# Core Features
+Dashboard Overview – displays Total Todos, Completed, and Pending counts.
+My Todos – view and manage all to-do items.
+Completed Tasks – see all finished tasks.
+Profile Page – show user info.
+User Session Panel – user details and Sign Out button in sidebar.
+Fully responsive UI built with Tailwind CSS.
 
 ## Git Basics Guide
 
