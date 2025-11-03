@@ -9,17 +9,26 @@ It communicates with a REST API from the backend server to perform CRUD (Create,
 
 # Tech Stack
 Next.js 14 (React framework)
+
 Tailwind CSS 4 for UI styling
+
 Axios for API requests
+
 React Icons for simple icons
+
 Node.js + Express.js + MongoDB on the backend (separate repository)
 
 # Core Features
 Dashboard Overview – displays Total Todos, Completed, and Pending counts.
+
 My Todos – view and manage all to-do items.
+
 Completed Tasks – see all finished tasks.
+
 Profile Page – show user info.
+
 User Session Panel – user details and Sign Out button in sidebar.
+
 Fully responsive UI built with Tailwind CSS.
 
 ## Git Basics Guide
