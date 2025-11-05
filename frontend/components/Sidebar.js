@@ -19,7 +19,6 @@ export default function Sidebar({ activeTab, userType = "user" }) {
       return [
         { name: 'Dashboard', href: '/user/dashboard', icon: 'bi-speedometer2' },
         { name: 'My Todos', href: '/user/todos', icon: 'bi-clipboard-check' },
-        { name: 'Completed', href: '/user/completed', icon: 'bi-check-circle' },
         { name: 'My Profile', href: '/user/profile', icon: 'bi-person' },
       ];
     }

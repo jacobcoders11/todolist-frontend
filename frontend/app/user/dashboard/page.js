@@ -1,8 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "../../../components/Sidebar";
 
 export default function Dashboard() {
+  
+  // State for sidebar active tab
   const [activeTab, setActiveTab] = useState('dashboard');
 
   return (
