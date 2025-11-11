@@ -56,91 +56,100 @@ export default function AdminDashboard() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen bg-gray-100">
+      <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <Sidebar activeTab="admin-dashboard" userType="admin" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-700"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Sidebar activeTab="admin-dashboard" userType="admin" />
       <div className="flex-1 overflow-y-auto">
         <div className="p-8">
           {/* Welcome Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-800">
+            <h1 className="text-2xl font-semibold text-gray-900">
               Admin Dashboard
             </h1>
-            <p className="text-gray-600 mt-2">Welcome back, {userName}!</p>
+            <p className="text-sm text-gray-500 mt-1">Welcome back, {userName}!</p>
           </div>
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Total Users Card */}
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 uppercase mb-1">
-                    Total Users
-                  </h3>
-                  <p className="text-4xl font-bold text-blue-500">{stats?.totalUsers || 0}</p>
-                </div>
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                  <i className="bi bi-people text-2xl text-blue-500"></i>
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-slate-100 rounded-xl">
+                    <i className="bi bi-people text-2xl text-slate-700"></i>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Total Users</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats?.totalUsers || 0}</p>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Total Todos Card */}
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 uppercase mb-1">
-                    Total Todos
-                  </h3>
-                  <p className="text-4xl font-bold text-green-500">{stats?.totalTodos || 0}</p>
-                </div>
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                  <i className="bi bi-clipboard-check text-2xl text-green-500"></i>
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-slate-100 rounded-xl">
+                    <i className="bi bi-clipboard-check text-2xl text-slate-700"></i>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Total Todos</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats?.totalTodos || 0}</p>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Completed Todos Card */}
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 uppercase mb-1">
-                    Completed
-                  </h3>
-                  <p className="text-4xl font-bold text-purple-500">{stats?.completedTodos || 0}</p>
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-slate-100 rounded-xl">
+                    <i className="bi bi-check-circle text-2xl text-slate-700"></i>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Completed</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats?.completedTodos || 0}</p>
+                    <div className="mt-2 flex items-center gap-2">
+                      <div className="w-16 bg-gray-100 rounded-full h-1.5">
+                        <div 
+                          className="bg-slate-700 h-1.5 rounded-full transition-all" 
+                          style={{width: `${stats?.totalTodos > 0 ? Math.round((stats.completedTodos / stats.totalTodos) * 100) : 0}%`}}
+                        ></div>
+                      </div>
+                      <span className="text-xs font-semibold text-gray-600">
+                        {stats?.totalTodos > 0 ? Math.round((stats.completedTodos / stats.totalTodos) * 100) : 0}%
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                  <i className="bi bi-check-circle text-2xl text-purple-500"></i>
-                </div>
-              </div>
-              <div className="mt-2">
-                <span className="text-xs text-gray-500">
-                  {stats?.totalTodos > 0 ? Math.round((stats.completedTodos / stats.totalTodos) * 100) : 0}% completion rate
-                </span>
               </div>
             </div>
 
             {/* Pending Todos Card */}
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 uppercase mb-1">
-                    Pending
-                  </h3>
-                  <p className="text-4xl font-bold text-orange-500">{stats?.pendingTodos || 0}</p>
-                </div>
-                <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                  <i className="bi bi-clock text-2xl text-orange-500"></i>
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-orange-50 rounded-xl">
+                    <i className="bi bi-clock text-2xl text-orange-600"></i>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Pending</p>
+                    <p className="text-2xl font-bold text-gray-900">{stats?.pendingTodos || 0}</p>
+                    <p className="text-xs text-gray-500 mt-1.5">
+                      {stats?.pendingTodos} {stats?.pendingTodos === 1 ? 'task' : 'tasks'} remaining
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -148,28 +157,32 @@ export default function AdminDashboard() {
 
           {/* Quick Actions */}
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-xl shadow-lg">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
+            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
               <div className="space-y-3">
                 <button
                   onClick={() => router.push("/admin/users")}
-                  className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-slate-100 rounded-xl transition-colors group"
                 >
                   <div className="flex items-center">
-                    <i className="bi bi-people text-xl text-blue-500 mr-3"></i>
-                    <span className="font-medium text-gray-700">Manage Users</span>
+                    <div className="p-2 bg-slate-100 rounded-lg group-hover:bg-slate-200 transition-colors">
+                      <i className="bi bi-people text-lg text-slate-700"></i>
+                    </div>
+                    <span className="font-medium text-gray-700 ml-3">Manage Users</span>
                   </div>
-                  <i className="bi bi-chevron-right text-gray-400"></i>
+                  <i className="bi bi-chevron-right text-gray-400 group-hover:text-slate-700 transition-colors"></i>
                 </button>
                 <button
                   onClick={() => router.push("/admin/todos")}
-                  className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-slate-100 rounded-xl transition-colors group"
                 >
                   <div className="flex items-center">
-                    <i className="bi bi-clipboard-check text-xl text-green-500 mr-3"></i>
-                    <span className="font-medium text-gray-700">Manage Todos</span>
+                    <div className="p-2 bg-slate-100 rounded-lg group-hover:bg-slate-200 transition-colors">
+                      <i className="bi bi-clipboard-check text-lg text-slate-700"></i>
+                    </div>
+                    <span className="font-medium text-gray-700 ml-3">Manage Todos</span>
                   </div>
-                  <i className="bi bi-chevron-right text-gray-400"></i>
+                  <i className="bi bi-chevron-right text-gray-400 group-hover:text-slate-700 transition-colors"></i>
                 </button>
               </div>
             </div>

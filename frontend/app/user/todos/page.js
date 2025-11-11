@@ -183,26 +183,29 @@ export default function MyTodos() {
 
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Sidebar Navigation */}
       <Sidebar activeTab={activeTab} userType="user" />
 
       {/* Main Content Area */}
       <main className="flex-1 overflow-y-auto p-8">
         {/* Page Title */}
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">My Todos</h1>
+        <div className="mb-8">
+          <h1 className="text-2xl font-semibold text-gray-900">My Todos</h1>
+          <p className="text-sm text-gray-500 mt-1">Manage your tasks and stay organized</p>
+        </div>
 
         {/* Todo Card Container */}
-        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="max-w-3xl mx-auto bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
 
           {/* Input Section - Add New Todo */}
-          <div className="p-6 border-b border-gray-200">
+          <div className="p-6 border-b border-gray-100">
             <div className="flex gap-3">
               <input
                 id="todoInput"
                 type="text"
                 placeholder="Add a new todo..."
-                className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="flex-1 input input-bordered bg-gray-50 border-gray-200 focus:bg-white focus:border-slate-700 focus:ring-2 focus:ring-slate-100"
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') {
                     handleAddClick(e.target);
@@ -211,27 +214,31 @@ export default function MyTodos() {
               />
               <button
                 onClick={() => handleAddClick(document.getElementById('todoInput'))}
-                className="px-6 py-2.5 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition-colors"
+                className="btn bg-gradient-to-r from-slate-700 to-blue-900 hover:from-slate-800 hover:to-blue-950 text-white border-0 px-8"
               >
+                <i className="bi bi-plus-lg mr-1"></i>
                 Add
               </button>
             </div>
           </div>
 
           {/* Todos List Section */}
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-gray-100">
             {/* Empty State - Show when no todos */}
             {todos.length === 0 ? (
-              <div className="p-8 text-center text-gray-500">
-                <i className="bi bi-clipboard-check text-4xl mb-2"></i>
-                <p>No todos yet. Add one above!</p>
+              <div className="p-12 text-center">
+                <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <i className="bi bi-clipboard-check text-2xl text-gray-400"></i>
+                </div>
+                <p className="text-sm font-medium text-gray-900 mb-1">No todos yet</p>
+                <p className="text-xs text-gray-500">Add your first todo above to get started</p>
               </div>
             ) : (
               /* Todo Items */
               todos.map((todo) => (
                 <div
                   key={todo.id}
-                  className="p-4 hover:bg-gray-50 transition-colors flex items-center gap-3"
+                  className="p-4 hover:bg-gray-50/50 transition-all flex items-center gap-3 group"
                 >
                   {/* Complete/Incomplete Button */}
                   <button
@@ -240,9 +247,11 @@ export default function MyTodos() {
                     title={todo.completed ? "Mark as incomplete" : "Mark as complete"}
                   >
                     {todo.completed ? (
-                      <i className="bi bi-check-circle-fill text-2xl text-green-500"></i>
+                      <div className="w-5 h-5 bg-green-700 rounded-full flex items-center justify-center shadow-sm">
+                        <i className="bi bi-check text-base text-white font-bold"></i>
+                      </div>
                     ) : (
-                      <i className="bi bi-circle text-2xl text-gray-300 hover:text-gray-400"></i>
+                      <div className="w-5 h-5 border-2 border-gray-300 rounded-full group-hover:border-slate-700 transition-colors"></div>
                     )}
                   </button>
 
@@ -258,31 +267,32 @@ export default function MyTodos() {
                           if (e.key === 'Enter') saveEdit(todo.id);
                           if (e.key === 'Escape') cancelEdit();
                         }}
-                        className="flex-1 px-3 py-1.5 border border-green-500 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="flex-1 input input-sm input-bordered border-slate-700 focus:border-slate-700 focus:ring-2 focus:ring-slate-100"
                         autoFocus
                       />
                       <button
                         onClick={() => saveEdit(todo.id)}
-                        className="shrink-0 px-3 py-1.5 bg-green-500 text-white rounded hover:bg-green-600 transition-colors text-sm font-medium"
+                        className="btn btn-sm bg-slate-700 hover:bg-slate-800 text-white border-0"
                         title="Save"
                       >
-                        Save
+                        <i className="bi bi-check-lg"></i>
                       </button>
                       <button
                         onClick={cancelEdit}
-                        className="shrink-0 px-3 py-1.5 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors text-sm font-medium"
+                        className="btn btn-sm btn-ghost"
                         title="Cancel"
                       >
-                        Cancel
+                        <i className="bi bi-x-lg"></i>
                       </button>
                     </div>
                   ) : (
                     /* View Mode - Show text */
                     <p
-                      className={`flex-1 text-base ${todo.completed
+                      className={`flex-1 text-sm ${
+                        todo.completed
                           ? 'line-through text-gray-400'
-                          : 'text-gray-800'
-                        }`}
+                          : 'text-gray-700'
+                      }`}
                     >
                       {todo.title}
                     </p>
@@ -290,20 +300,20 @@ export default function MyTodos() {
 
                   {/* Action Buttons - Only show in view mode */}
                   {editingId !== todo.id && (
-                    <div className="flex gap-1">
+                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button
                         onClick={() => startEdit(todo)}
-                        className="shrink-0 p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="btn btn-sm btn-ghost text-slate-700 hover:bg-slate-100"
                         title="Edit todo"
                       >
-                        <i className="bi bi-pencil text-lg"></i>
+                        <i className="bi bi-pencil"></i>
                       </button>
                       <button
                         onClick={() => deleteTodo(todo.id)}
-                        className="shrink-0 p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                        className="btn btn-sm btn-ghost text-red-600 hover:bg-red-50"
                         title="Delete todo"
                       >
-                        <i className="bi bi-trash text-lg"></i>
+                        <i className="bi bi-trash"></i>
                       </button>
                     </div>
                   )}
@@ -314,9 +324,16 @@ export default function MyTodos() {
 
           {/* Footer Stats - Show todo counts */}
           {todos.length > 0 && (
-            <div className="px-6 py-3 bg-gray-50 text-sm text-gray-600 flex justify-between">
-              <span>{activeTodos} active</span>
-              <span>{completedTodos} completed</span>
+            <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
+              <div className="flex gap-4 text-sm">
+                <span className="text-gray-600">
+                  <span className="font-semibold text-gray-900">{activeTodos}</span> active
+                </span>
+                <span className="text-gray-300">•</span>
+                <span className="text-gray-600">
+                  <span className="font-semibold text-gray-900">{completedTodos}</span> completed
+                </span>
+              </div>
             </div>
           )}
         </div>

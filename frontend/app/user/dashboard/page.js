@@ -65,124 +65,137 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen bg-gray-100">
+      <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <Sidebar activeTab="dashboard" userType="user" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+          <span className="loading loading-spinner loading-lg text-blue-600"></span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Sidebar activeTab="dashboard" userType="user" />
       <div className="flex-1 overflow-y-auto">
         <div className="p-8">
           {/* Welcome Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-800">
+            <h1 className="text-2xl font-semibold text-gray-900">
               Welcome back, {userName}!
             </h1>
-            <p className="text-gray-600 mt-2">Here's your todo summary</p>
+            <p className="text-sm text-gray-500 mt-1">Here's your todo summary for today</p>
           </div>
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {/* Total Todos Card */}
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 uppercase mb-1">
-                    Total Todos
-                  </h3>
-                  <p className="text-4xl font-bold text-green-500">{total}</p>
-                </div>
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                  <i className="bi bi-clipboard-check text-2xl text-green-500"></i>
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-slate-100 rounded-xl">
+                    <i className="bi bi-clipboard-check text-2xl text-slate-700"></i>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Total Todos</p>
+                    <p className="text-2xl font-bold text-gray-900">{total}</p>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Completed Card */}
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 uppercase mb-1">
-                    Completed
-                  </h3>
-                  <p className="text-4xl font-bold text-blue-500">{completed}</p>
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-slate-100 rounded-xl">
+                    <i className="bi bi-check-circle text-2xl text-slate-700"></i>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Completed</p>
+                    <p className="text-2xl font-bold text-gray-900">{completed}</p>
+                    <div className="mt-2 flex items-center gap-2">
+                      <div className="w-16 bg-gray-100 rounded-full h-1.5">
+                        <div 
+                          className="bg-slate-700 h-1.5 rounded-full transition-all" 
+                          style={{width: `${total > 0 ? Math.round((completed / total) * 100) : 0}%`}}
+                        ></div>
+                      </div>
+                      <span className="text-xs font-semibold text-gray-600">
+                        {total > 0 ? Math.round((completed / total) * 100) : 0}%
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                  <i className="bi bi-check-circle text-2xl text-blue-500"></i>
-                </div>
-              </div>
-              <div className="mt-2">
-                <span className="text-xs text-gray-500">
-                  {total > 0 ? Math.round((completed / total) * 100) : 0}% completion rate
-                </span>
               </div>
             </div>
 
             {/* Pending Card */}
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500 uppercase mb-1">
-                    Pending
-                  </h3>
-                  <p className="text-4xl font-bold text-orange-500">{pending}</p>
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-orange-50 rounded-xl">
+                    <i className="bi bi-clock text-2xl text-orange-600"></i>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Pending</p>
+                    <p className="text-2xl font-bold text-gray-900">{pending}</p>
+                    <p className="text-xs text-gray-500 mt-1.5">
+                      {pending} {pending === 1 ? 'task' : 'tasks'} remaining
+                    </p>
+                  </div>
                 </div>
-                <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                  <i className="bi bi-clock text-2xl text-orange-500"></i>
-                </div>
-              </div>
-              <div className="mt-2">
-                <span className="text-xs text-gray-500">
-                  {pending} {pending === 1 ? 'task' : 'tasks'} remaining
-                </span>
               </div>
             </div>
           </div>
 
           {/* Recent Todos Section */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-800">Recent Todos</h2>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-lg font-semibold text-gray-900">Recent Todos</h2>
               <button
                 onClick={() => router.push("/user/todos")}
-                className="text-green-500 hover:text-green-600 text-sm font-medium"
+                className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1"
               >
-                View All →
+                View All
+                <i className="bi bi-arrow-right text-sm"></i>
               </button>
             </div>
 
             {todos.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">
-                <i className="bi bi-inbox text-4xl mb-2"></i>
-                <p>No todos yet. Start by creating your first todo!</p>
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <i className="bi bi-inbox text-2xl text-gray-400"></i>
+                </div>
+                <p className="text-sm text-gray-500">No todos yet</p>
+                <p className="text-xs text-gray-400 mt-1">Create your first todo to get started</p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {todos.slice(0, 5).map((todo) => (
                   <div
                     key={todo.id}
-                    className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-colors"
+                    className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-xl transition-all group"
                   >
-                    {todo.completed ? (
-                      <i className="bi bi-check-circle-fill text-xl text-green-500 mr-3"></i>
-                    ) : (
-                      <i className="bi bi-circle text-xl text-gray-300 mr-3"></i>
-                    )}
+                    <div className="shrink-0">
+                      {todo.completed ? (
+                        <div className="w-5 h-5 bg-green-700 rounded-full flex items-center justify-center shadow-sm">
+                          <i className="bi bi-check text-base text-white font-bold"></i>
+                        </div>
+                      ) : (
+                        <div className="w-5 h-5 border-2 border-gray-300 rounded-full group-hover:border-slate-700 transition-colors"></div>
+                      )}
+                    </div>
                     <span
-                      className={`flex-1 ${todo.completed
-                        ? "line-through text-gray-400"
-                        : "text-gray-800"
-                        }`}
+                      className={`flex-1 text-sm ${
+                        todo.completed
+                          ? "line-through text-gray-400"
+                          : "text-gray-700"
+                      }`}
                     >
                       {todo.title}
                     </span>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-gray-400 shrink-0">
                       {formatDistanceToNow(new Date(todo.created_at), { addSuffix: true })}
                     </span>
                   </div>

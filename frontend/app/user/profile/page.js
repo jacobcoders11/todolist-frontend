@@ -109,56 +109,61 @@ export default function Profile() {
 
     if (!user) {
         return (
-            <div className="flex h-screen bg-gray-100">
+            <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
                 <Sidebar activeTab="profile" userType="user" />
                 <main className="flex-1 flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+                    <span className="loading loading-spinner loading-lg text-blue-600"></span>
                 </main>
             </div>
         );
     }
 
     return (
-        <div className="flex h-screen bg-gray-100">
+        <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
             <Sidebar activeTab="profile" userType="user" />
 
             <main className="flex-1 overflow-y-auto p-8">
-                <h1 className="text-3xl font-bold text-gray-800 mb-6">My Profile</h1>
+                <div className="mb-8">
+                    <h1 className="text-2xl font-semibold text-gray-900">My Profile</h1>
+                    <p className="text-sm text-gray-500 mt-1">Manage your account information</p>
+                </div>
 
-                <div className="max-w-2xl bg-white rounded-lg shadow-lg p-6">
+                <div className="max-w-2xl bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
                     {successMessage && (
-                        <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm">
-                            {successMessage}
+                        <div className="mb-6 p-4 bg-green-50 border border-green-100 rounded-xl text-green-700 text-sm flex items-start gap-2">
+                            <i className="bi bi-check-circle text-green-600 text-lg shrink-0"></i>
+                            <span>{successMessage}</span>
                         </div>
                     )}
 
                     {errors.general && (
-                        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-                            {errors.general}
+                        <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm flex items-start gap-2">
+                            <i className="bi bi-exclamation-circle text-red-600 text-lg shrink-0"></i>
+                            <span>{errors.general}</span>
                         </div>
                     )}
 
                     {!isEditing ? (
                         // View Mode
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                             <div>
-                                <label className="text-sm font-medium text-gray-500">Name</label>
-                                <p className="text-lg text-gray-800">{user.name}</p>
+                                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Name</label>
+                                <p className="text-base text-gray-900 mt-1.5">{user.name}</p>
                             </div>
 
                             <div>
-                                <label className="text-sm font-medium text-gray-500">Email</label>
-                                <p className="text-lg text-gray-800">{user.email}</p>
+                                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Email</label>
+                                <p className="text-base text-gray-900 mt-1.5">{user.email}</p>
                             </div>
 
                             <div>
-                                <label className="text-sm font-medium text-gray-500">Phone Number</label>
-                                <p className="text-lg text-gray-800">{user.phone_number}</p>
+                                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Phone Number</label>
+                                <p className="text-base text-gray-900 mt-1.5">{user.phone_number}</p>
                             </div>
 
                             <div>
-                                <label className="text-sm font-medium text-gray-500">Member Since</label>
-                                <p className="text-lg text-gray-800">
+                                <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Member Since</label>
+                                <p className="text-base text-gray-900 mt-1.5">
                                     {new Date(user.created_at).toLocaleDateString('en-US', {
                                         year: 'numeric',
                                         month: 'long',
@@ -167,26 +172,28 @@ export default function Profile() {
                                 </p>
                             </div>
                             
-                            <div className="flex gap-3 mt-4">
-                            <button
-                                onClick={() => setIsEditing(true)}
-                                className="px-6 py-2.5 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition-colors"
-                            >
-                                Edit Profile
-                            </button>
-                            <button
-                                onClick={() => router.push("/user/change-password")}
-                                className="px-6 py-2.5 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors"
-                            >
-                                Change Password
-                            </button>
+                            <div className="flex gap-3 pt-4 border-t border-gray-100">
+                                <button
+                                    onClick={() => setIsEditing(true)}
+                                    className="btn bg-gradient-to-r from-slate-700 to-blue-900 hover:from-slate-800 hover:to-blue-950 text-white border-0"
+                                >
+                                    <i className="bi bi-pencil mr-2"></i>
+                                    Edit Profile
+                                </button>
+                                <button
+                                    onClick={() => router.push("/user/change-password")}
+                                    className="btn btn-ghost border border-gray-200 hover:bg-gray-50"
+                                >
+                                    <i className="bi bi-key mr-2"></i>
+                                    Change Password
+                                </button>
                             </div>
                         </div>
                     ) : (
                         // Edit Mode
-                        <form onSubmit={handleUpdateProfile} className="space-y-4">
+                        <form onSubmit={handleUpdateProfile} className="space-y-5">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">
                                     Name
                                 </label>
                                 <input
@@ -194,12 +201,12 @@ export default function Profile() {
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    className="input input-bordered w-full bg-gray-50 border-gray-200 focus:bg-white focus:border-slate-700 focus:ring-2 focus:ring-slate-100"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">
                                     Email
                                 </label>
                                 <input
@@ -207,12 +214,12 @@ export default function Profile() {
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    className="input input-bordered w-full bg-gray-50 border-gray-200 focus:bg-white focus:border-slate-700 focus:ring-2 focus:ring-slate-100"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">
                                     Phone Number
                                 </label>
                                 <input
@@ -220,16 +227,17 @@ export default function Profile() {
                                     name="phone_number"
                                     value={formData.phone_number}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    className="input input-bordered w-full bg-gray-50 border-gray-200 focus:bg-white focus:border-slate-700 focus:ring-2 focus:ring-slate-100"
                                 />
                             </div>
 
-                            <div className="flex gap-3 mt-6">
+                            <div className="flex gap-3 pt-4 border-t border-gray-100">
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="px-6 py-2.5 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50"
+                                    className="btn bg-gradient-to-r from-slate-700 to-blue-900 hover:from-slate-800 hover:to-blue-950 text-white border-0"
                                 >
+                                    {isLoading ? <span className="loading loading-spinner loading-sm"></span> : null}
                                     {isLoading ? "Saving..." : "Save Changes"}
                                 </button>
                                 <button
@@ -243,7 +251,7 @@ export default function Profile() {
                                         });
                                         setErrors({});
                                     }}
-                                    className="px-6 py-2.5 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 transition-colors"
+                                    className="btn btn-ghost border border-gray-200 hover:bg-gray-50"
                                 >
                                     Cancel
                                 </button>

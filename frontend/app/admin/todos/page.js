@@ -77,10 +77,10 @@ export default function ManageTodos() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen bg-gray-100">
+      <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <Sidebar activeTab="all-todos" userType="admin" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-700"></div>
         </div>
       </div>
     );
@@ -88,84 +88,77 @@ export default function ManageTodos() {
 
   return (
     <>
-      <div className="flex h-screen bg-gray-100">
+      <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <Sidebar activeTab="all-todos" userType="admin" />
         
         <main className="flex-1 overflow-y-auto p-8">
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-8 flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-800">Manage Todos</h1>
-              <p className="text-gray-600 mt-2">{filteredTodos.length} todos</p>
+              <h1 className="text-2xl font-semibold text-gray-900">Manage Todos</h1>
+              <p className="text-sm text-gray-500 mt-1">{filteredTodos.length} todos</p>
             </div>
             
             {/* Filter Buttons */}
             <div className="flex gap-2">
               <button
                 onClick={() => setFilter('all')}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'all' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+                className={`px-4 py-2 rounded-xl font-medium transition-all ${filter === 'all' ? 'bg-gradient-to-r from-slate-700 to-blue-900 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-slate-50 border border-gray-100'}`}
               >
                 All
               </button>
               <button
                 onClick={() => setFilter('completed')}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'completed' ? 'bg-green-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+                className={`px-4 py-2 rounded-xl font-medium transition-all ${filter === 'completed' ? 'bg-slate-700 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-slate-50 border border-gray-100'}`}
               >
                 Completed
               </button>
               <button
                 onClick={() => setFilter('pending')}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'pending' ? 'bg-orange-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+                className={`px-4 py-2 rounded-xl font-medium transition-all ${filter === 'pending' ? 'bg-orange-500 text-white shadow-sm' : 'bg-white text-gray-700 hover:bg-slate-50 border border-gray-100'}`}
               >
                 Pending
               </button>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b">
+                <thead className="bg-slate-50 border-b border-gray-100">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Todo</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Todo</th>
+                    <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">User</th>
+                    <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Created</th>
+                    <th className="px-6 py-3.5 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-100">
                   {filteredTodos.map((todo) => (
-                    <tr key={todo.id} className="hover:bg-gray-50">
+                    <tr key={todo.id} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          {todo.completed ? (
-                            <i className="bi bi-check-circle-fill text-xl text-green-500 mr-3"></i>
-                          ) : (
-                            <i className="bi bi-circle text-xl text-gray-300 mr-3"></i>
-                          )}
-                          <span className={todo.completed ? 'line-through text-gray-400' : 'text-gray-900'}>
-                            {todo.title}
-                          </span>
-                        </div>
+                        <span className={`text-sm ${todo.completed ? 'line-through text-gray-400' : 'text-gray-700'}`}>
+                          {todo.title}
+                        </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">{todo.user_name}</div>
                         <div className="text-sm text-gray-500">{todo.user_email}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${todo.completed ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'}`}>
+                        <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-lg ${todo.completed ? 'bg-green-50 text-green-700' : 'bg-orange-50 text-orange-700'}`}>
                           {todo.completed ? 'Completed' : 'Pending'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                         {formatDistanceToNow(new Date(todo.created_at), { addSuffix: true })}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button
                           onClick={() => setDeleteModal({ show: true, todo })}
-                          className="text-red-600 hover:text-red-900"
+                          className="text-red-600 hover:text-red-800 transition-colors px-3 py-1.5 hover:bg-red-50 rounded-lg"
                         >
-                          <i className="bi bi-trash"></i> Delete
+                          <i className="bi bi-trash mr-1.5"></i> Delete
                         </button>
                       </td>
                     </tr>
@@ -179,25 +172,25 @@ export default function ManageTodos() {
 
       {/* Delete Confirmation Modal */}
       {deleteModal.show && (
-        <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
-          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full mx-4">
-            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <i className="bi bi-trash text-2xl text-red-500"></i>
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full mx-4">
+            <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <i className="bi bi-trash text-xl text-red-600"></i>
             </div>
-            <h3 className="text-xl font-bold text-gray-800 text-center mb-2">Delete Todo</h3>
-            <p className="text-gray-600 text-center mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">Delete Todo</h3>
+            <p className="text-sm text-gray-500 text-center mb-6">
               Are you sure you want to delete "<strong>{deleteModal.todo?.title}</strong>"?
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => setDeleteModal({ show: false, todo: null })}
-                className="flex-1 px-4 py-2.5 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors"
+                className="flex-1 btn btn-ghost border border-gray-200 hover:bg-gray-50"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDeleteTodo(deleteModal.todo.id)}
-                className="flex-1 px-4 py-2.5 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition-colors"
+                className="flex-1 btn bg-red-600 hover:bg-red-700 text-white border-0"
               >
                 Delete
               </button>
