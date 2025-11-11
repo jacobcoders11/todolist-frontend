@@ -77,7 +77,7 @@ export default function ManageTodos() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="flex h-screen bg-linear-to-br from-gray-50 to-gray-100">
         <Sidebar activeTab="all-todos" userType="admin" />
         <div className="flex-1 flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-700"></div>
@@ -88,7 +88,7 @@ export default function ManageTodos() {
 
   return (
     <>
-      <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="flex h-screen bg-linear-to-br from-gray-50 to-gray-100">
         <Sidebar activeTab="all-todos" userType="admin" />
         
         <main className="flex-1 overflow-y-auto p-8">

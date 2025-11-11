@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {FaRegEnvelope} from "react-icons/fa";
 import {MdLockOutline} from "react-icons/md";
@@ -14,6 +14,22 @@ export default function Home() {
   
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    
+    if (token && user) {
+      const userData = JSON.parse(user);
+      // Redirect to appropriate dashboard based on role
+      if (userData.role === 1) {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/user/dashboard");
+      }
+    }
+  }, [router]);
 
   // Validation function
   const validateForm = () => {
