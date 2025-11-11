@@ -23,20 +23,41 @@ export default function MyTodos() {
   // Function to get all todos from backend
   async function fetchTodos() {
     try {
-      const response = await fetch("/api/todos");
+      // Get token from localStorage
+      const token = localStorage.getItem("token");
+      
+      const response = await fetch("/api/todos", {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      
       const data = await response.json();
-      setTodos(data.todos || []);
+      
+      if (response.ok && Array.isArray(data.todos)) {
+        setTodos(data.todos);
+      } else {
+        console.error("API response:", data);
+        setTodos([]);
+      }
     } catch (error) {
       console.error("Error fetching todos:", error);
+      setTodos([]);
     }
   }
 
   // Function to add a new todo
   async function addTodo(title) {
     try {
+      // Get token from localStorage
+      const token = localStorage.getItem("token");
+      
       const response = await fetch("/api/todos", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({
           todo: { title, completed: false }
         })
@@ -44,19 +65,31 @@ export default function MyTodos() {
 
       const data = await response.json();
 
-      // Add new todo to the top of the list
-      setTodos([data.todo, ...todos]);
+      if (response.ok) {
+        // Add new todo to the top of the list
+        setTodos([data.todo, ...todos]);
+      } else {
+        console.error("Error adding todo:", data.error);
+        alert(data.error || "Failed to add todo");
+      }
     } catch (error) {
       console.error("Error adding todo:", error);
+      alert("Failed to add todo");
     }
   }
 
   // Function to mark todo as complete or incomplete
   async function toggleTodo(id, currentStatus) {
     try {
+      // Get token from localStorage
+      const token = localStorage.getItem("token");
+      
       await fetch(`/api/todos/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ completed: !currentStatus })
       });
 
@@ -72,7 +105,15 @@ export default function MyTodos() {
   // Function to delete a todo
   async function deleteTodo(id) {
     try {
-      await fetch(`/api/todos/${id}`, { method: "DELETE" });
+      // Get token from localStorage
+      const token = localStorage.getItem("token");
+      
+      await fetch(`/api/todos/${id}`, { 
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
 
       // Remove the todo from the list
       setTodos(todos.filter(todo => todo.id !== id));
@@ -103,9 +144,15 @@ export default function MyTodos() {
     }
 
     try {
+      // Get token from localStorage
+      const token = localStorage.getItem("token");
+      
       await fetch(`/api/todos/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ title: trimmedText })
       });
 
@@ -130,9 +177,9 @@ export default function MyTodos() {
     }
   }
 
-  // Count active and completed todos
-  const activeTodos = todos.filter(t => !t.completed).length;
-  const completedTodos = todos.filter(t => t.completed).length;
+  // Count active and completed todos (with safety check)
+  const activeTodos = todos.filter(t => t && !t.completed).length;
+  const completedTodos = todos.filter(t => t && t.completed).length;
 
 
   return (
@@ -277,5 +324,3 @@ export default function MyTodos() {
     </div>
   );
 }
-
-

@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {FaRegEnvelope} from "react-icons/fa";
 import {MdLockOutline} from "react-icons/md";
 
 export default function Home() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -11,6 +13,7 @@ export default function Home() {
   });
   
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   // Validation function
   const validateForm = () => {
@@ -46,7 +49,7 @@ export default function Home() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     const formErrors = validateForm();
@@ -56,7 +59,44 @@ export default function Home() {
       return;
     }
     
-    console.log("Form data:", formData);
+    setIsLoading(true);
+    
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        // Store JWT token in localStorage
+        localStorage.setItem("token", data.token);
+        
+        // Store user info
+        localStorage.setItem("user", JSON.stringify(data.user));
+        
+        // Redirect based on user role
+        if (data.user.role === 1) {
+          // Admin user - redirect to admin dashboard
+          router.push("/admin/dashboard");
+        } else {
+          // Regular user - redirect to user dashboard
+          router.push("/user/dashboard");
+        }
+      } else {
+        setErrors({ general: data.error || "Login failed" });
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrors({ general: "Network error. Please try again." });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -78,6 +118,13 @@ export default function Home() {
               <h2 className="text-2xl font-bold text-gray-800 mb-2">Welcome back</h2>
               <p className="text-gray-500 text-sm">Sign in to your account</p>
             </div>
+            
+            {/* General Error Message */}
+            {errors.general && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+                {errors.general}
+              </div>
+            )}
             
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               {/* Email Input */}
@@ -136,9 +183,10 @@ export default function Home() {
               {/* Submit Button */}
               <button 
                 type="submit"
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+                disabled={isLoading}
+                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Sign In
+                {isLoading ? "Signing In..." : "Sign In"}
               </button>
             </form>
           </div>
@@ -152,7 +200,10 @@ export default function Home() {
             <p className="text-green-100 mb-6 leading-relaxed">
               Enter your personal details and start your journey with us
             </p>
-            <button className="border-2 border-white text-white hover:bg-white hover:text-green-500 px-8 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105">
+            <button 
+              onClick={() => router.push("/registration")}
+              className="border-2 border-white text-white hover:bg-white hover:text-green-500 px-8 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105"
+            >
               Sign Up
             </button>
           </div>
