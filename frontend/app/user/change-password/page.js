@@ -90,100 +90,91 @@ export default function ChangePassword() {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Sidebar activeTab="change-password" userType="user" />
 
       <main className="flex-1 overflow-y-auto p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Change Password</h1>
+        <div className="mb-8">
+          <h1 className="text-2xl font-semibold text-gray-900">Change Password</h1>
+          <p className="text-sm text-gray-500 mt-1">Update your password to keep your account secure</p>
+        </div>
 
-        <div className="max-w-md bg-white rounded-lg shadow-lg p-6">
+        <div className="max-w-md bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
           {successMessage && (
-            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm">
-              {successMessage}
+            <div className="mb-6 p-4 bg-green-50 border border-green-100 rounded-xl text-green-700 text-sm flex items-start gap-2">
+              <i className="bi bi-check-circle text-green-600 text-lg shrink-0"></i>
+              <span>{successMessage}</span>
             </div>
           )}
 
           {errors.general && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-              {errors.general}
+            <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm flex items-start gap-2">
+              <i className="bi bi-exclamation-circle text-red-600 text-lg shrink-0"></i>
+              <span>{errors.general}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Current Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 Current Password
               </label>
-              <div className={`relative bg-gray-50 rounded-xl transition-all duration-200 hover:bg-gray-100 focus-within:bg-white focus-within:ring-2 focus-within:ring-green-500/20 ${errors.currentPassword ? 'ring-2 ring-red-500/20 bg-red-50' : ''}`}>
-                <div className="flex items-center p-4">
-                  <MdLockOutline className="text-gray-400 mr-3 text-sm"/>
-                  <input
-                    type="password"
-                    name="currentPassword"
-                    value={formData.currentPassword}
-                    onChange={handleChange}
-                    placeholder="Enter current password"
-                    className="bg-transparent outline-none text-sm flex-1 text-gray-700 placeholder-gray-400"
-                  />
-                </div>
-              </div>
+              <input
+                type="password"
+                name="currentPassword"
+                value={formData.currentPassword}
+                onChange={handleChange}
+                placeholder="Enter current password"
+                className={`input input-bordered w-full bg-gray-50 border-gray-200 focus:bg-white focus:border-slate-700 focus:ring-2 focus:ring-slate-100 ${errors.currentPassword ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : ''}`}
+              />
               {errors.currentPassword && (
-                <p className="text-red-500 text-xs mt-2 ml-1">{errors.currentPassword}</p>
+                <p className="text-xs text-red-500 mt-1.5">{errors.currentPassword}</p>
               )}
             </div>
 
             {/* New Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 New Password
               </label>
-              <div className={`relative bg-gray-50 rounded-xl transition-all duration-200 hover:bg-gray-100 focus-within:bg-white focus-within:ring-2 focus-within:ring-green-500/20 ${errors.newPassword ? 'ring-2 ring-red-500/20 bg-red-50' : ''}`}>
-                <div className="flex items-center p-4">
-                  <MdLockOutline className="text-gray-400 mr-3 text-sm"/>
-                  <input
-                    type="password"
-                    name="newPassword"
-                    value={formData.newPassword}
-                    onChange={handleChange}
-                    placeholder="Enter new password (min 6 characters)"
-                    className="bg-transparent outline-none text-sm flex-1 text-gray-700 placeholder-gray-400"
-                  />
-                </div>
-              </div>
+              <input
+                type="password"
+                name="newPassword"
+                value={formData.newPassword}
+                onChange={handleChange}
+                placeholder="Enter new password (min 6 characters)"
+                className={`input input-bordered w-full bg-gray-50 border-gray-200 focus:bg-white focus:border-slate-700 focus:ring-2 focus:ring-slate-100 ${errors.newPassword ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : ''}`}
+              />
               {errors.newPassword && (
-                <p className="text-red-500 text-xs mt-2 ml-1">{errors.newPassword}</p>
+                <p className="text-xs text-red-500 mt-1.5">{errors.newPassword}</p>
               )}
             </div>
 
             {/* Confirm Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 Confirm New Password
               </label>
-              <div className={`relative bg-gray-50 rounded-xl transition-all duration-200 hover:bg-gray-100 focus-within:bg-white focus-within:ring-2 focus-within:ring-green-500/20 ${errors.confirmPassword ? 'ring-2 ring-red-500/20 bg-red-50' : ''}`}>
-                <div className="flex items-center p-4">
-                  <MdLockOutline className="text-gray-400 mr-3 text-sm"/>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    placeholder="Confirm new password"
-                    className="bg-transparent outline-none text-sm flex-1 text-gray-700 placeholder-gray-400"
-                  />
-                </div>
-              </div>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Confirm new password"
+                className={`input input-bordered w-full bg-gray-50 border-gray-200 focus:bg-white focus:border-slate-700 focus:ring-2 focus:ring-slate-100 ${errors.confirmPassword ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : ''}`}
+              />
               {errors.confirmPassword && (
-                <p className="text-red-500 text-xs mt-2 ml-1">{errors.confirmPassword}</p>
+                <p className="text-xs text-red-500 mt-1.5">{errors.confirmPassword}</p>
               )}
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full mt-6 px-6 py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn w-full bg-gradient-to-r from-slate-700 to-blue-900 hover:from-slate-800 hover:to-blue-950 text-white border-0 mt-6"
             >
+              {isLoading ? <span className="loading loading-spinner loading-sm"></span> : null}
               {isLoading ? "Changing Password..." : "Change Password"}
             </button>
           </form>

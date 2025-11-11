@@ -9,8 +9,15 @@ export default function ManageUsers() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [deleteModal, setDeleteModal] = useState({ show: false, user: null });
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
+    // Get current user ID from localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      setCurrentUserId(user.id);
+    }
     fetchUsers();
   }, []);
 
@@ -70,10 +77,10 @@ export default function ManageUsers() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen bg-gray-100">
+      <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <Sidebar activeTab="manage-users" userType="admin" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-700"></div>
         </div>
       </div>
     );
@@ -81,33 +88,33 @@ export default function ManageUsers() {
 
   return (
     <>
-      <div className="flex h-screen bg-gray-100">
+      <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <Sidebar activeTab="manage-users" userType="admin" />
         
         <main className="flex-1 overflow-y-auto p-8">
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">Manage Users</h1>
-            <p className="text-gray-600 mt-2">{users.length} total users</p>
+          <div className="mb-8">
+            <h1 className="text-2xl font-semibold text-gray-900">Manage Users</h1>
+            <p className="text-sm text-gray-500 mt-1">{users.length} total users</p>
           </div>
 
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-blue-50 border-b">
+                <thead className="bg-slate-50 border-b border-gray-100">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">User</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">Phone</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">Role</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-blue-700 uppercase tracking-wider">Joined</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-blue-700 uppercase tracking-wider">Actions</th>
+                    <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">User</th>
+                    <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Phone</th>
+                    <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Role</th>
+                    <th className="px-6 py-3.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Joined</th>
+                    <th className="px-6 py-3.5 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-100">
                   {users.map((user) => (
-                    <tr key={user.id} className="hover:bg-blue-50">
+                    <tr key={user.id} className="hover:bg-gray-50/50 transition-colors">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${user.role === 1 ? 'bg-blue-500' : 'bg-green-500'}`}>
+                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-semibold ${user.role === 1 ? 'bg-gradient-to-br from-slate-700 to-blue-900' : 'bg-slate-400'}`}>
                             {user.name.charAt(0).toUpperCase()}
                           </div>
                           <div className="ml-4">
@@ -116,24 +123,30 @@ export default function ManageUsers() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                         {user.phone_number || 'N/A'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.role === 1 ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}`}>
+                        <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-lg ${user.role === 1 ? 'bg-slate-100 text-slate-800' : 'bg-gray-100 text-gray-700'}`}>
                           {user.role === 1 ? 'Admin' : 'User'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                         {formatDistanceToNow(new Date(user.created_at), { addSuffix: true })}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button
-                          onClick={() => setDeleteModal({ show: true, user })}
-                          className="text-red-600 hover:text-red-900"
-                        >
-                          <i className="bi bi-trash"></i> Delete
-                        </button>
+                        {user.id === currentUserId ? (
+                          <span className="text-gray-400 italic text-xs">
+                            Your account
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => setDeleteModal({ show: true, user })}
+                            className="text-red-600 hover:text-red-800 transition-colors px-3 py-1.5 hover:bg-red-50 rounded-lg"
+                          >
+                            <i className="bi bi-trash mr-1.5"></i> Delete
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -146,25 +159,25 @@ export default function ManageUsers() {
 
       {/* Delete Confirmation Modal */}
       {deleteModal.show && (
-        <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
-          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full mx-4">
-            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <i className="bi bi-exclamation-triangle text-2xl text-red-500"></i>
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full mx-4">
+            <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <i className="bi bi-exclamation-triangle text-xl text-red-600"></i>
             </div>
-            <h3 className="text-xl font-bold text-gray-800 text-center mb-2">Delete User</h3>
-            <p className="text-gray-600 text-center mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">Delete User</h3>
+            <p className="text-sm text-gray-500 text-center mb-6">
               Are you sure you want to delete <strong>{deleteModal.user?.name}</strong>? This action cannot be undone.
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => setDeleteModal({ show: false, user: null })}
-                className="flex-1 px-4 py-2.5 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors"
+                className="flex-1 btn btn-ghost border border-gray-200 hover:bg-gray-50"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDeleteUser(deleteModal.user.id)}
-                className="flex-1 px-4 py-2.5 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition-colors"
+                className="flex-1 btn bg-red-600 hover:bg-red-700 text-white border-0"
               >
                 Delete
               </button>

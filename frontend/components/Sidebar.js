@@ -16,7 +16,7 @@ export default function Sidebar({ activeTab, userType = "user" }) {
         name: user.name,
         email: user.email,
         initial: user.name.charAt(0).toUpperCase(),
-        bgColor: user.role === 1 ? "bg-blue-500" : "bg-green-500"
+        bgColor: user.role === 1 ? "bg-gradient-to-br from-slate-700 to-blue-900" : "bg-slate-500"
       });
     }
   }, []);
@@ -60,12 +60,12 @@ export default function Sidebar({ activeTab, userType = "user" }) {
       <div className="w-64 bg-white shadow-lg h-screen flex flex-col">
         <div className="p-6 border-b border-gray-200">
           <h1 className="text-2xl font-bold">
-            <span className="text-green-500">Todo</span>
+            <span className="text-slate-700">Todo</span>
             <span className="text-gray-800">List</span>
           </h1>
         </div>
         <div className="flex-1 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-700"></div>
         </div>
       </div>
     );
@@ -73,76 +73,80 @@ export default function Sidebar({ activeTab, userType = "user" }) {
 
   return (
     <>
-      <div className="w-64 bg-white shadow-lg h-screen flex flex-col">
+      <div className="w-64 bg-white border-r border-gray-100 h-screen flex flex-col">
         {/* Logo Section */}
-        <div className="p-6 border-b border-gray-200">
-          <h1 className="text-2xl font-bold">
-            <span className="text-green-500">Todo</span>
-            <span className="text-gray-800">List</span>
-          </h1>
+        <div className="p-6 border-b border-gray-100">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-slate-700 to-blue-900 rounded-xl flex items-center justify-center shadow-sm">
+              <i className="bi bi-check2-square text-lg text-white"></i>
+            </div>
+            <h1 className="text-lg font-semibold text-gray-900">
+              TodoList
+            </h1>
+          </div>
         </div>
 
         {/* Navigation Menu */}
-        <nav className="flex-1 p-4">
+        <nav className="flex-1 p-3">
           <div className="space-y-1">
             {menuItems.map((item, index) => {
               const isActive = activeTab === item.name.toLowerCase().replace(/\s+/g, '-');
 
               return (
-                <div key={index} className="relative group">
-                  <button
-                    onClick={() => handleNavigation(item)}
-                    className={`w-full flex items-center text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-150 rounded-md px-3 py-2.5 text-sm cursor-pointer ${isActive ? 'text-gray-900 bg-gray-100 font-bold' : ''
-                      }`}
-                  >
-                    <div className="flex justify-center shrink-0 w-6">
-                      <i className={`bi ${item.icon} text-base ${isActive ? 'font-black text-black drop-shadow-md' : ''}`}></i>
-                    </div>
-                    <span className="ml-3">{item.name}</span>
-                  </button>
-                </div>
+                <button
+                  key={index}
+                  onClick={() => handleNavigation(item)}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg transition-all ${
+                    isActive 
+                      ? 'bg-slate-100 text-slate-800 font-medium' 
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  }`}
+                >
+                  <i className={`bi ${item.icon} text-lg`}></i>
+                  <span>{item.name}</span>
+                </button>
               );
             })}
           </div>
         </nav>
 
         {/* User Section */}
-        <div className="p-4 border-t border-gray-200">
-          <div className="flex items-center mb-4">
-            <div className={`w-10 h-10 ${userInfo.bgColor} rounded-full flex items-center justify-center text-white font-bold`}>
+        <div className="p-4 border-t border-gray-100">
+          <div className="flex items-center gap-3 mb-3 p-2">
+            <div className={`w-9 h-9 ${userInfo.bgColor} rounded-xl flex items-center justify-center text-white font-semibold text-sm shadow-sm`}>
               {userInfo.initial}
             </div>
-            <div className="ml-3 flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-800 truncate">{userInfo.name}</p>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-gray-900 truncate">{userInfo.name}</p>
               <p className="text-xs text-gray-500 truncate">{userInfo.email}</p>
             </div>
           </div>
           <button
             onClick={() => setShowSignOutModal(true)}
-            className="w-full text-red-500 hover:text-red-600 text-sm font-medium py-2.5 hover:bg-gray-100 rounded-lg transition-all duration-200 flex items-center justify-start px-3"
+            className="w-full flex items-center justify-center gap-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 py-2.5 rounded-lg transition-all font-medium"
           >
-            <i className="bi bi-box-arrow-right mr-2"></i>
-            Sign Out
+            <i className="bi bi-box-arrow-right"></i>
+            <span>Sign Out</span>
           </button>
         </div>
       </div>
 
       {/* Sign Out Confirmation Modal */}
       {showSignOutModal && (
-        <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.50)' }}>
-          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full mx-4 transform transition-all">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full mx-4 animate-in fade-in zoom-in duration-200">
             {/* Icon */}
-            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <i className="bi bi-box-arrow-right text-2xl text-red-500"></i>
+            <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <i className="bi bi-box-arrow-right text-xl text-red-600"></i>
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-bold text-gray-800 text-center mb-2">
+            <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">
               Sign Out
             </h3>
 
             {/* Message */}
-            <p className="text-gray-600 text-center mb-6">
+            <p className="text-sm text-gray-500 text-center mb-6">
               Are you sure you want to sign out of your account?
             </p>
 
@@ -150,13 +154,13 @@ export default function Sidebar({ activeTab, userType = "user" }) {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowSignOutModal(false)}
-                className="flex-1 px-4 py-2.5 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors"
+                className="flex-1 btn btn-ghost border border-gray-200 hover:bg-gray-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSignOut}
-                className="flex-1 px-4 py-2.5 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 transition-colors"
+                className="flex-1 btn bg-red-600 hover:bg-red-700 text-white border-0"
               >
                 Sign Out
               </button>

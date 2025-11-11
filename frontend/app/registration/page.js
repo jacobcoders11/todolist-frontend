@@ -105,19 +105,19 @@ export default function Registration() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-xl overflow-hidden max-w-4xl w-full flex">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-6">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden max-w-4xl w-full flex flex-col-reverse lg:flex-row">
         {/* Left Section - Welcome */}
-        <div className="w-2/5 bg-green-500 text-white flex items-center justify-center p-8">
+        <div className="w-full lg:w-2/5 bg-gradient-to-br from-slate-700 to-blue-900 text-white flex items-center justify-center p-8 lg:p-12">
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4">Welcome Back!</h2>
-            <div className="w-12 h-0.5 bg-white/30 mx-auto mb-4"></div>
-            <p className="text-green-100 mb-6 leading-relaxed">
+            <h2 className="text-3xl font-semibold mb-4">Welcome Back!</h2>
+            <div className="w-16 h-0.5 bg-white/30 mx-auto mb-6"></div>
+            <p className="text-white/90 mb-8 leading-relaxed">
               Already have an account? Sign in to access your todos
             </p>
             <button 
               onClick={() => router.push("/")}
-              className="border-2 border-white text-white hover:bg-white hover:text-green-500 px-8 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105"
+              className="btn btn-outline border-2 border-white text-white hover:bg-white hover:text-slate-700 hover:border-white"
             >
               Sign In
             </button>
@@ -125,128 +125,114 @@ export default function Registration() {
         </div>
 
         {/* Right Section - Registration Form */}
-        <div className="w-3/5 p-8">
-          <div className="max-w-sm mx-auto">
+        <div className="w-full lg:w-3/5 p-8 lg:p-12">
+          <div className="max-w-sm mx-auto w-full">
             {/* Logo */}
-            <div className="text-left mb-8">
-              <h1 className="text-2xl font-bold">
-                <span className="text-green-500">Todo</span>
-                <span className="text-gray-800">List</span>
+            <div className="mb-8">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-slate-700 to-blue-900 rounded-xl mb-4">
+                <i className="bi bi-check2-square text-xl text-white"></i>
+              </div>
+              <h1 className="text-2xl font-semibold text-gray-900">
+                TodoList
               </h1>
             </div>
 
             {/* Success Message */}
             {showSuccess ? (
-              <div className="text-center py-12">
-                <div className="mb-6">
-                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-800 mb-2">Registration Successful!</h2>
-                  <p className="text-gray-500 text-sm mb-4">Your account has been created successfully.</p>
-                  <p className="text-gray-400 text-xs">Redirecting to login page...</p>
+              <div className="text-center py-8">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
                 </div>
-                <div className="flex justify-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
-                </div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">Account Created!</h2>
+                <p className="text-sm text-gray-500 mb-4">Your account has been created successfully.</p>
+                <p className="text-xs text-gray-400 mb-4">Redirecting to sign in...</p>
+                <span className="loading loading-spinner loading-md text-slate-700"></span>
               </div>
             ) : (
               <>
                 {/* Form Header */}
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-2">Create Account</h2>
-                  <p className="text-gray-500 text-sm">Sign up to get started</p>
+                <div className="mb-8">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-1">Create your account</h2>
+                  <p className="text-sm text-gray-500">Get started with your free account</p>
                 </div>
                 
                 {/* General Error Message */}
                 {errors.general && (
-                  <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
-                    {errors.general}
+                  <div className="mb-4 p-3 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm flex items-start gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{errors.general}</span>
                   </div>
                 )}
                 
                 <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                   {/* Name Input */}
                   <div>
-                    <div className={`relative bg-gray-50 rounded-xl transition-all duration-200 hover:bg-gray-100 focus-within:bg-white focus-within:ring-2 focus-within:ring-green-500/20 ${errors.name ? 'ring-2 ring-red-500/20 bg-red-50' : ''}`}>
-                      <div className="flex items-center p-4">
-                        <FaRegUser className="text-gray-400 mr-3 text-sm"/>
-                        <input 
-                          type="text" 
-                          name="name" 
-                          value={formData.name}
-                          onChange={handleChange}
-                          placeholder="Full Name" 
-                          className="bg-transparent outline-none text-sm flex-1 text-gray-700 placeholder-gray-400"
-                        />
-                      </div>
-                    </div>
-                    {errors.name && <p className="text-red-500 text-xs mt-2 ml-1">{errors.name}</p>}
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
+                    <input 
+                      type="text" 
+                      name="name" 
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="John Doe" 
+                      className={`input input-bordered w-full bg-gray-50 border-gray-200 focus:bg-white focus:border-slate-700 focus:ring-2 focus:ring-slate-100 transition-all ${errors.name ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : ''}`}
+                    />
+                    {errors.name && <p className="text-xs text-red-500 mt-1.5">{errors.name}</p>}
                   </div>
 
                   {/* Email Input */}
                   <div>
-                    <div className={`relative bg-gray-50 rounded-xl transition-all duration-200 hover:bg-gray-100 focus-within:bg-white focus-within:ring-2 focus-within:ring-green-500/20 ${errors.email ? 'ring-2 ring-red-500/20 bg-red-50' : ''}`}>
-                      <div className="flex items-center p-4">
-                        <FaRegEnvelope className="text-gray-400 mr-3 text-sm"/>
-                        <input 
-                          type="text" 
-                          name="email" 
-                          value={formData.email}
-                          onChange={handleChange}
-                          placeholder="Email address" 
-                          className="bg-transparent outline-none text-sm flex-1 text-gray-700 placeholder-gray-400"
-                        />
-                      </div>
-                    </div>
-                    {errors.email && <p className="text-red-500 text-xs mt-2 ml-1">{errors.email}</p>}
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+                    <input 
+                      type="text" 
+                      name="email" 
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="you@example.com" 
+                      className={`input input-bordered w-full bg-gray-50 border-gray-200 focus:bg-white focus:border-slate-700 focus:ring-2 focus:ring-slate-100 transition-all ${errors.email ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : ''}`}
+                    />
+                    {errors.email && <p className="text-xs text-red-500 mt-1.5">{errors.email}</p>}
                   </div>
 
                   {/* Phone Number Input */}
                   <div>
-                    <div className={`relative bg-gray-50 rounded-xl transition-all duration-200 hover:bg-gray-100 focus-within:bg-white focus-within:ring-2 focus-within:ring-green-500/20 ${errors.phone_number ? 'ring-2 ring-red-500/20 bg-red-50' : ''}`}>
-                      <div className="flex items-center p-4">
-                        <MdPhone className="text-gray-400 mr-3 text-sm"/>
-                        <input 
-                          type="number" 
-                          name="phone_number" 
-                          value={formData.phone_number}
-                          onChange={handleChange}
-                          placeholder="Phone Number" 
-                          className="bg-transparent outline-none text-sm flex-1 text-gray-700 placeholder-gray-400"
-                        />
-                      </div>
-                    </div>
-                    {errors.phone_number && <p className="text-red-500 text-xs mt-2 ml-1">{errors.phone_number}</p>}
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Phone Number</label>
+                    <input 
+                      type="tel" 
+                      name="phone_number" 
+                      value={formData.phone_number}
+                      onChange={handleChange}
+                      placeholder="+1 (555) 123-4567" 
+                      className={`input input-bordered w-full bg-gray-50 border-gray-200 focus:bg-white focus:border-slate-700 focus:ring-2 focus:ring-slate-100 transition-all ${errors.phone_number ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : ''}`}
+                    />
+                    {errors.phone_number && <p className="text-xs text-red-500 mt-1.5">{errors.phone_number}</p>}
                   </div>
                   
                   {/* Password Input */}
                   <div>
-                    <div className={`relative bg-gray-50 rounded-xl transition-all duration-200 hover:bg-gray-100 focus-within:bg-white focus-within:ring-2 focus-within:ring-green-500/20 ${errors.password ? 'ring-2 ring-red-500/20 bg-red-50' : ''}`}>
-                      <div className="flex items-center p-4">
-                        <MdLockOutline className="text-gray-400 mr-3 text-sm"/>
-                        <input 
-                          type="password" 
-                          name="password" 
-                          value={formData.password}
-                          onChange={handleChange}
-                          placeholder="Password" 
-                          className="bg-transparent outline-none text-sm flex-1 text-gray-700 placeholder-gray-400"
-                        />
-                      </div>
-                    </div>
-                    {errors.password && <p className="text-red-500 text-xs mt-2 ml-1">{errors.password}</p>}
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+                    <input 
+                      type="password" 
+                      name="password" 
+                      value={formData.password}
+                      onChange={handleChange}
+                      placeholder="••••••••" 
+                      className={`input input-bordered w-full bg-gray-50 border-gray-200 focus:bg-white focus:border-slate-700 focus:ring-2 focus:ring-slate-100 transition-all ${errors.password ? 'border-red-300 focus:border-red-500 focus:ring-red-100' : ''}`}
+                    />
+                    {errors.password && <p className="text-xs text-red-500 mt-1.5">{errors.password}</p>}
                   </div>
                   
                   {/* Submit Button */}
                   <button 
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="btn w-full bg-gradient-to-r from-slate-700 to-blue-900 hover:from-slate-800 hover:to-blue-950 text-white border-0 shadow-sm mt-6"
                   >
-                    {isLoading ? "Creating Account..." : "Sign Up"}
+                    {isLoading ? <span className="loading loading-spinner loading-sm"></span> : null}
+                    {isLoading ? "Creating Account..." : "Create Account"}
                   </button>
                 </form>
               </>

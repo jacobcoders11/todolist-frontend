@@ -1,9 +1,10 @@
 @import "tailwindcss";
+@plugin "daisyui";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafbfc;
+  --foreground: #172B4D;
 }
 
 @theme inline {
@@ -15,13 +16,34 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1D2125;
+    --foreground: #B6C2CF;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Modern DaisyUI Theme Configuration with Dark Blue */
+[data-theme="light"] {
+  --rounded-box: 0.75rem;
+  --rounded-btn: 0.5rem;
+  --rounded-badge: 0.5rem;
+  --animation-btn: 0.15s;
+  --animation-input: 0.15s;
+  --btn-focus-scale: 0.98;
+  --border-btn: 1px;
+  --tab-border: 1px;
+}
+
+/* Custom Dark Blue Theme Colors */
+:root {
+  --primary-dark-blue: #334155; /* slate-700 */
+  --primary-blue: #1e3a8a; /* blue-900 */
+  --accent-blue: #0369a1; /* sky-700 */
 }
