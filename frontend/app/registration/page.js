@@ -210,7 +210,7 @@ export default function Registration() {
                       <div className="flex items-center p-4">
                         <MdPhone className="text-gray-400 mr-3 text-sm"/>
                         <input 
-                          type="tel" 
+                          type="number" 
                           name="phone_number" 
                           value={formData.phone_number}
                           onChange={handleChange}
